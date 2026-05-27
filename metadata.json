@@ -1,0 +1,6 @@
+{
+  "name": "Zapatería en línea",
+  "description": "Tienda en línea, configurador de servicios de lavandería, mantenimiento de calzado, carrito mixto y paneles de administración y operador.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

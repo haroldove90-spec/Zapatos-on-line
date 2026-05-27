@@ -27,6 +27,7 @@ import OperatorView from './components/OperatorView';
 export default function App() {
   // Global Role state: 'customer' | 'admin' | 'operator'
   const [currentRole, setCurrentRole] = useState<'customer' | 'admin' | 'operator'>('customer');
+  const [showRoleSelector, setShowRoleSelector] = useState(false);
 
   // Shared state engines loaded from localStorage if exist, else seeded
   const [products, setProducts] = useState<Product[]>([]);
@@ -178,49 +179,6 @@ export default function App() {
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col font-sans">
       
-      {/* PERSISTENT REAL-TIME MULTI-ROLE SWITCHER FOOTER */}
-      <div className="sticky top-0 z-50 bg-neutral-900 border-b border-neutral-800 text-neutral-300 py-2 px-4 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-        <div className="flex items-center gap-2">
-          <Database className="h-4 w-4 text-yellow-405 text-yellow-400" />
-          <span className="font-mono text-2xs tracking-tight text-slate-350">
-            Base de Datos: <strong className="text-white">Conectada (Simulada LocalStorage)</strong>
-          </span>
-          <span className="hidden md:inline text-neutral-600">|</span>
-          <span className="hidden md:inline font-mono text-[10px] text-zinc-400 flex items-center gap-1">
-            <Clock className="h-3 w-3" /> {currentTimeString}
-          </span>
-        </div>
-
-        {/* Roles Toggles */}
-        <div className="flex items-center gap-1.5 bg-neutral-950 p-1 rounded-xl">
-          <span className="text-4xs uppercase tracking-widest font-mono text-slate-500 font-bold px-2">ROL ACTIVO:</span>
-          <button 
-            onClick={() => setCurrentRole('customer')}
-            className={`px-3 py-1 text-2xs font-bold rounded-lg transition ${currentRole === 'customer' ? 'bg-yellow-405 bg-yellow-400 text-neutral-950' : 'text-slate-400 hover:text-white'}`}
-            id="role-btn-customer"
-          >
-            <User className="inline-block h-3.5 w-3.5 mr-1" />
-            Cliente (Tienda)
-          </button>
-          <button 
-            onClick={() => setCurrentRole('admin')}
-            className={`px-3 py-1 text-2xs font-bold rounded-lg transition ${currentRole === 'admin' ? 'bg-yellow-450 bg-yellow-400 text-neutral-950' : 'text-slate-400 hover:text-white'}`}
-            id="role-btn-admin"
-          >
-            <Settings className="inline-block h-3.5 w-3.5 mr-1" />
-            Administrador
-          </button>
-          <button 
-            onClick={() => setCurrentRole('operator')}
-            className={`px-3 py-1 text-2xs font-bold rounded-lg transition ${currentRole === 'operator' ? 'bg-yellow-450 bg-yellow-400 text-neutral-950' : 'text-slate-400 hover:text-white'}`}
-            id="role-btn-operator"
-          >
-            <Wrench className="inline-block h-3.5 w-3.5 mr-1" />
-            Operador (Staff)
-          </button>
-        </div>
-      </div>
-
       {/* RENDER ACTIVE ROUTE VIEW GRID */}
       <div className="flex-grow">
         {currentRole === 'customer' && (
@@ -262,6 +220,97 @@ export default function App() {
             />
           </div>
         )}
+      </div>
+
+      {/* FLOATING ACTION BUTTON (FAB) FOR ROLE SELECTION (Bottom-Right) */}
+      <div className="fixed bottom-24 right-4 sm:right-6 lg:bottom-8 lg:right-8 z-50 flex flex-col items-end">
+        {/* Popover Menu */}
+        {showRoleSelector && (
+          <div className="bg-slate-900 border border-slate-800 text-white rounded-2xl shadow-2xl p-4 mb-3 w-64 space-y-3 animate-slide-up">
+            <div className="border-b border-slate-800 pb-2">
+              <h4 className="text-[10px] uppercase font-mono font-bold text-slate-400 tracking-wider">Selector de Roles (Demo)</h4>
+              <p className="text-[10px] text-zinc-400 flex items-center gap-1 mt-1 font-mono">
+                <Database className="h-3.5 w-3.5 text-blue-400" /> DB Simulada: LocalStorage
+              </p>
+            </div>
+            
+            <div className="space-y-1">
+              <button
+                onClick={() => {
+                  setCurrentRole('customer');
+                  setShowRoleSelector(false);
+                }}
+                className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all ${
+                  currentRole === 'customer' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <User className="h-3.5 w-3.5" />
+                  <span>👤 Cliente (Tienda)</span>
+                </div>
+                {currentRole === 'customer' && <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />}
+              </button>
+
+              <button
+                onClick={() => {
+                  setCurrentRole('admin');
+                  setShowRoleSelector(false);
+                }}
+                className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all ${
+                  currentRole === 'admin' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <Settings className="h-3.5 w-3.5" />
+                  <span>⚙️ Administrador</span>
+                </div>
+                {currentRole === 'admin' && <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />}
+              </button>
+
+              <button
+                onClick={() => {
+                  setCurrentRole('operator');
+                  setShowRoleSelector(false);
+                }}
+                className={`w-full flex items-center justify-between p-2.5 rounded-xl text-xs font-bold transition-all ${
+                  currentRole === 'operator' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                }`}
+              >
+                <div className="flex items-center gap-2">
+                  <Wrench className="h-3.5 w-3.5" />
+                  <span>🛠️ Operador (Staff)</span>
+                </div>
+                {currentRole === 'operator' && <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />}
+              </button>
+            </div>
+            
+            <div className="text-[9px] text-center text-slate-500 font-mono pt-1.5 border-t border-slate-800">
+              Presiona para cambiar de vista interactiva
+            </div>
+          </div>
+        )}
+
+        {/* Main Floating Trigger Button */}
+        <button
+          onClick={() => setShowRoleSelector(!showRoleSelector)}
+          className="bg-neutral-950 border border-slate-800 hover:bg-neutral-900 text-white flex items-center gap-2.5 px-4.5 py-3 rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95"
+          id="floating-role-selector"
+        >
+          <div className="relative">
+            <span className="w-2.5 h-2.5 bg-blue-500 rounded-full inline-block animate-ping absolute -top-0.5 -right-0.5" />
+            <span className="w-2.5 h-2.5 bg-blue-600 rounded-full inline-block absolute -top-0.5 -right-0.5" />
+            <span className="text-base select-none">🔑</span>
+          </div>
+          <span className="text-xs font-black uppercase tracking-wider font-mono">
+            {currentRole === 'customer' ? 'Roles' : currentRole === 'admin' ? 'Ver Admin' : 'Ver Operador'}
+          </span>
+        </button>
       </div>
 
       {/* Small informative toast for developers visiting */}

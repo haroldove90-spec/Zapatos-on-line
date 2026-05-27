@@ -433,9 +433,9 @@ export default function CustomerView({
             <div className="relative md:col-span-12 lg:col-span-8 rounded-3xl overflow-hidden bg-slate-900 group shadow-lg min-h-[380px] flex flex-col justify-end border border-slate-800">
               <div className="absolute inset-0 bg-gradient-to-tr from-black/90 via-black/30 to-transparent z-10"></div>
               <img 
-                src="https://images.unsplash.com/photo-1545173168-9f1873be9968?auto=format&fit=crop&q=80&w=1200" 
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDDf1DY-rgc0XAoEvTf_NuHeXwxgpyNIMHWg&s" 
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-103 opacity-75" 
-                alt="Laundry"
+                alt="Professional care"
               />
               <div className="relative z-20 p-8 h-full flex flex-col justify-end">
                 <span className="text-blue-400 font-bold tracking-[0.2em] text-xs uppercase mb-2 italic">Nueva Experiencia 3D • Cuidado Sostenible</span>
